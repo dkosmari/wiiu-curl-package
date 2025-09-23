@@ -1,6 +1,6 @@
 pkgname=wiiu-curl
 pkgver=8.16.0
-pkgrel=1
+pkgrel=2
 pkgdesc='Library for transferring data with URLs'
 arch=('any')
 url='https://github.com/dkosmari/curl/tree/wiiu'
