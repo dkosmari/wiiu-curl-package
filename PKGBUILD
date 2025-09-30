@@ -1,6 +1,6 @@
 pkgname=wiiu-curl
 pkgver=8.16.0
-pkgrel=2
+pkgrel=3
 pkgdesc='Library for transferring data with URLs'
 arch=('any')
 url='https://github.com/dkosmari/curl/tree/wiiu'
@@ -15,7 +15,26 @@ source=("https://github.com/dkosmari/curl/releases/download/$pkgname-$pkgver/$pk
 build() {
   cd $pkgname-$pkgver
 
-  ./configure --disable-silent-rules --host=powerpc-eabi --enable-wiiu --prefix=$DEVKITPRO/portlibs/wiiu --disable-shared --disable-ipv6 --disable-unix-sockets --disable-socketpair --disable-manual --with-mbedtls --with-ca-path=/vol/storage_mlc01/sys/title/0005001b/10054000/content/scerts --without-libpsl --enable-websockets --enable-verbose --disable-docs --enable-threaded-resolver CFLAGS="-Os -ffunction-sections"
+  export PORTLIBS_PREFIX=$DEVKITPRO/portlibs/wiiu
+
+  ./configure \
+      --disable-silent-rules \
+      --host=powerpc-eabi \
+      --enable-wiiu \
+      --prefix=${PORTLIBS_PREFIX} \
+      --disable-shared \
+      --disable-ipv6 \
+      --disable-unix-sockets \
+      --disable-socketpair \
+      --disable-manual \
+      --with-mbedtls=${PORTLIBS_PREFIX} \
+      --with-ca-path=/vol/storage_mlc01/sys/title/0005001b/10054000/content/scerts \
+      --without-libpsl \
+      --enable-websockets \
+      --enable-verbose \
+      --disable-docs \
+      --enable-threaded-resolver \
+      CFLAGS="-Os -ffunction-sections"
 
   make -C lib
 }
